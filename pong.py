@@ -1,6 +1,6 @@
 # Implementation of classic arcade game Pong
 
-import simplegui
+import simpleguitk as simplegui
 import random
 
 # initialize globals - pos and vel encode vertical info for paddles
@@ -13,20 +13,20 @@ HALF_PAD_WIDTH = PAD_WIDTH / 2
 HALF_PAD_HEIGHT = PAD_HEIGHT / 2
 LEFT = False
 RIGHT = True
-ball_vel = [6, 5]
+ball_vel = [random.randrange(120, 240), random.randrange(60, 180)]
 ball_pos = [WIDTH / 2, HEIGHT / 2]
 
 # initialize ball_pos and ball_vel for new bal in middle of table
 # if direction is RIGHT, the ball's velocity is upper right, else upper left
 def spawn_ball(direction):
     global ball_pos, ball_vel # these are vectors stored as lists
-
+    
 
 # define event handlers
 def new_game():
     global paddle1_pos, paddle2_pos, paddle1_vel, paddle2_vel  # these are numbers
     global score1, score2  # these are ints
-    spawn_ball(random.randrange(100,200))
+    spawn_ball("RIGHT")
     
 def draw(canvas):
     global score1, score2, paddle1_pos, paddle2_pos, ball_pos, ball_vel
