@@ -64,9 +64,7 @@ def draw(canvas):
     # draw ball
     canvas.draw_circle(ball_pos, BALL_RADIUS, 1, "DarkCyan","Cyan")
     # update paddle's vertical position, keep paddle on the screen
-    if paddle1_pos + paddle1_vel >= HALF_PAD_HEIGHT:
-        paddle1_pos += paddle1_vel
-    elif paddle1_pos + paddle1_vel <= HEIGHT - HALF_PAD_HEIGHT:
+    if paddle1_pos + paddle1_vel >= HALF_PAD_HEIGHT or paddle1_pos + paddle1_vel <= HEIGHT - HALF_PAD_HEIGHT:
         paddle1_pos += paddle1_vel
     # draw paddles
     canvas.draw_polygon([(1, paddle1_pos - HALF_PAD_HEIGHT),(PAD_WIDTH,paddle1_pos - HALF_PAD_HEIGHT),(PAD_WIDTH,paddle1_pos + HALF_PAD_HEIGHT),(1,paddle1_pos + HALF_PAD_HEIGHT)],1,"White","White")
