@@ -64,11 +64,13 @@ def draw(canvas):
     # draw ball
     canvas.draw_circle(ball_pos, BALL_RADIUS, 1, "DarkCyan","Cyan")
     # update paddle's vertical position, keep paddle on the screen
-    if paddle1_pos + paddle1_vel >= HALF_PAD_HEIGHT or paddle1_pos + paddle1_vel <= HEIGHT - HALF_PAD_HEIGHT:
+    if paddle1_pos + paddle1_vel >= HALF_PAD_HEIGHT and paddle1_pos + paddle1_vel <= HEIGHT - HALF_PAD_HEIGHT:
         paddle1_pos += paddle1_vel
+    if paddle2_pos + paddle2_vel >= HALF_PAD_HEIGHT and paddle2_pos + paddle2_vel <= HEIGHT - HALF_PAD_HEIGHT:
+        paddle2_pos += paddle2_vel
     # draw paddles
     canvas.draw_polygon([(1, paddle1_pos - HALF_PAD_HEIGHT),(PAD_WIDTH,paddle1_pos - HALF_PAD_HEIGHT),(PAD_WIDTH,paddle1_pos + HALF_PAD_HEIGHT),(1,paddle1_pos + HALF_PAD_HEIGHT)],1,"White","White")
-    
+    canvas.draw_polygon([(WIDTH-1, paddle2_pos - HALF_PAD_HEIGHT),(WIDTH-PAD_WIDTH,paddle2_pos - HALF_PAD_HEIGHT),(WIDTH-PAD_WIDTH,paddle2_pos + HALF_PAD_HEIGHT),(WIDTH-1,paddle2_pos + HALF_PAD_HEIGHT)],1,"White","White")
     # draw scores
         
 def keydown(key):
@@ -77,13 +79,21 @@ def keydown(key):
         paddle1_vel = -(paddle1_vel + 5)
     if key == simplegui.KEY_MAP["s"]:
         paddle1_vel = paddle1_vel + 5
-   
+    if key == simplegui.KEY_MAP["UP"]:
+        paddle2_vel = -(paddle2_vel + 5)
+    if key == simplegui.KEY_MAP["DOWN"]:
+        paddle2_vel = paddle2_vel + 5
+    
 def keyup(key):
     global paddle1_vel, paddle2_vel
     if key == simplegui.KEY_MAP["w"]:
         paddle1_vel = 0
     elif key == simplegui.KEY_MAP["s"]:
         paddle1_vel = 0
+    if key == simplegui.KEY_MAP["UP"]:
+        paddle2_vel = 0
+    elif key == simplegui.KEY_MAP["DOWN"]:
+        paddle2_vel = 0
 
 # create frame
 frame = simplegui.create_frame("Pong", WIDTH, HEIGHT)
