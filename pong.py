@@ -38,16 +38,17 @@ def new_game():
     paddle2_pos = HEIGHT / 2
     paddle1_vel = 0
     paddle2_vel = 0
+    score1 = 0
+    score2 = 0
     
 def draw(canvas):
     global score1, score2, paddle1_pos, paddle2_pos, ball_pos, ball_vel
- 
         
     # draw mid line and gutters
     canvas.draw_line([WIDTH / 2, 0],[WIDTH / 2, HEIGHT], 1, "White")
     canvas.draw_line([PAD_WIDTH, 0],[PAD_WIDTH, HEIGHT], 1, "White")
     canvas.draw_line([WIDTH - PAD_WIDTH, 0],[WIDTH - PAD_WIDTH, HEIGHT], 1, "White")
-    canvas.draw_text(paddle1_pos,(30,30),20,"White")
+    
     # update ball
     ball_pos[0] = ball_pos[0] + ball_vel[0]
     ball_pos[1] = ball_pos[1] + ball_vel[1]
@@ -56,11 +57,25 @@ def draw(canvas):
         ball_vel[1] = -ball_vel[1]
     elif(ball_pos[1] <= BALL_RADIUS - 1):
         ball_vel[1] = -ball_vel[1]
-        
-    if(ball_pos[0] >= WIDTH - PAD_WIDTH - 1 - BALL_RADIUS):
-        spawn_ball("RIGHT")
-    elif(ball_pos[0] <= PAD_WIDTH + BALL_RADIUS + 1):
-        spawn_ball("LEFT")
+    
+      
+    if(ball_pos[0] >= WIDTH - PAD_WIDTH - BALL_RADIUS - 6):
+        if ball_pos[1] >= paddle2_pos - HALF_PAD_HEIGHT and ball_pos[1] <= paddle2_pos + HALF_PAD_HEIGHT:
+            ball_vel[0] = -ball_vel[0]
+            ball_vel[0] = ball_vel[0]+ball_vel[0]*0.1
+        else:
+            score1 = score1 + 1
+            spawn_ball("LEFT")
+    elif(ball_pos[0] <= PAD_WIDTH + BALL_RADIUS+1):
+        print ball_pos[1], paddle1_pos 
+        if ball_pos[1] >= paddle1_pos - HALF_PAD_HEIGHT and ball_pos[1] <= paddle1_pos + HALF_PAD_HEIGHT:        
+            ball_vel[0] = -ball_vel[0]
+            ball_vel[0] = ball_vel[0]+ball_vel[0]*0.1
+        else:
+            score2 = score2 + 1
+            spawn_ball("RIGHT")
+
+    
     # draw ball
     canvas.draw_circle(ball_pos, BALL_RADIUS, 1, "DarkCyan","Cyan")
     # update paddle's vertical position, keep paddle on the screen
@@ -72,17 +87,18 @@ def draw(canvas):
     canvas.draw_polygon([(1, paddle1_pos - HALF_PAD_HEIGHT),(PAD_WIDTH,paddle1_pos - HALF_PAD_HEIGHT),(PAD_WIDTH,paddle1_pos + HALF_PAD_HEIGHT),(1,paddle1_pos + HALF_PAD_HEIGHT)],1,"White","White")
     canvas.draw_polygon([(WIDTH-1, paddle2_pos - HALF_PAD_HEIGHT),(WIDTH-PAD_WIDTH,paddle2_pos - HALF_PAD_HEIGHT),(WIDTH-PAD_WIDTH,paddle2_pos + HALF_PAD_HEIGHT),(WIDTH-1,paddle2_pos + HALF_PAD_HEIGHT)],1,"White","White")
     # draw scores
-        
+    canvas.draw_text(str(score1), (WIDTH / 2 - 50,50), 40, "White")
+    canvas.draw_text(str(score2), (WIDTH / 2 + 30,50), 40, "White")
 def keydown(key):
     global paddle1_vel, paddle2_vel
     if key == simplegui.KEY_MAP["w"]:
-        paddle1_vel = -(paddle1_vel + 5)
+        paddle1_vel = -(paddle1_vel + 10)
     if key == simplegui.KEY_MAP["s"]:
-        paddle1_vel = paddle1_vel + 5
-    if key == simplegui.KEY_MAP["UP"]:
-        paddle2_vel = -(paddle2_vel + 5)
-    if key == simplegui.KEY_MAP["DOWN"]:
-        paddle2_vel = paddle2_vel + 5
+        paddle1_vel = paddle1_vel + 10
+    if key == simplegui.KEY_MAP["up"]:
+        paddle2_vel = -(paddle2_vel + 10)
+    if key == simplegui.KEY_MAP["down"]:
+        paddle2_vel = paddle2_vel + 10
     
 def keyup(key):
     global paddle1_vel, paddle2_vel
@@ -90,9 +106,9 @@ def keyup(key):
         paddle1_vel = 0
     elif key == simplegui.KEY_MAP["s"]:
         paddle1_vel = 0
-    if key == simplegui.KEY_MAP["UP"]:
+    if key == simplegui.KEY_MAP["up"]:
         paddle2_vel = 0
-    elif key == simplegui.KEY_MAP["DOWN"]:
+    elif key == simplegui.KEY_MAP["down"]:
         paddle2_vel = 0
 
 # create frame
