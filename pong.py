@@ -11,8 +11,6 @@ PAD_WIDTH = 8
 PAD_HEIGHT = 80
 HALF_PAD_WIDTH = PAD_WIDTH / 2
 HALF_PAD_HEIGHT = PAD_HEIGHT / 2
-LEFT = False
-RIGHT = True
 ball_vel = [random.randrange(2,4), random.randrange(1,3)]
 ball_pos = [WIDTH / 2, HEIGHT / 2]
 
@@ -67,7 +65,6 @@ def draw(canvas):
             score1 = score1 + 1
             spawn_ball("LEFT")
     elif(ball_pos[0] <= PAD_WIDTH + BALL_RADIUS+1):
-        print ball_pos[1], paddle1_pos 
         if ball_pos[1] >= paddle1_pos - HALF_PAD_HEIGHT and ball_pos[1] <= paddle1_pos + HALF_PAD_HEIGHT:        
             ball_vel[0] = -ball_vel[0]
             ball_vel[0] = ball_vel[0]+ball_vel[0]*0.1
@@ -89,6 +86,7 @@ def draw(canvas):
     # draw scores
     canvas.draw_text(str(score1), (WIDTH / 2 - 50,50), 40, "White")
     canvas.draw_text(str(score2), (WIDTH / 2 + 30,50), 40, "White")
+    
 def keydown(key):
     global paddle1_vel, paddle2_vel
     if key == simplegui.KEY_MAP["w"]:
