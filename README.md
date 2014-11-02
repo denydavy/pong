@@ -1,4 +1,4 @@
 Pong
 ====
 
-Python pong game for Coursera's "An Introduction to Interactive Programming in Python" course
+Python pong game for Coursera's "An Introduction to Interactive Programming in Python" course at http://coursera.org
